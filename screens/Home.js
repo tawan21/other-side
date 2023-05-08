@@ -2,18 +2,17 @@ import React from 'react'
 import { VStack } from 'native-base'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
-import { NativeBaseProvider } from 'native-base'
+import MenuButtons from '../components/MenuButtons'
+import ContactsMenu from '../components/ContactsMenu'
 
-function Home() {
+function Home({navigation}) {
   return (
-    <NativeBaseProvider>
       <VStack space={4} safeArea bg='gray.800' padding='15px' height='100%'>
         <Header />
         <SearchBar />
-        {/* <MenuButtons />
-        <ContactsMenu /> */}
+        <MenuButtons navigation={navigation} />
+        <ContactsMenu />
       </VStack>
-    </NativeBaseProvider>
   )
 }
 
