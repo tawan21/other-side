@@ -3,9 +3,11 @@ import StartMeeting from '../components/StartMeeting';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { Text } from 'native-base';
+import { Box, Button, Flex, HStack, Spacer, Text } from 'native-base';
 import { Camera } from 'expo-camera';
 import { Alert } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 let socket;
 
@@ -40,10 +42,36 @@ function MeetingRoom() {
     }
   }, []);
 
-  return (
-    startCam ? <Camera type={'front'} style={{ width: '100%', height: '100%' }}></Camera> :
+  return startCam ? (
+    <Flex bg='gray.800' safeAreaBottom direction='column' height='full'>
+      <Flex bg='black' direction='column' justify='center' flex='1'>
+        <Camera type={'front'} style={{ width: '100%', height: '90%' }}></Camera>
+        <HStack justifyContent='space-evenly'>{activeUsers.map(user => <Text key={user.userName} color='white'>{user.userName}</Text>)}</HStack>
+      </Flex>
+      <HStack justifyContent='space-evenly'>
+        <Box>
+          <Button variant='unstyled'><FontAwesome5 name='microphone' size={24} color='#efefef' /></Button>
+          <Text color='white' textAlign='center'>Mute</Text>
+        </Box>
+        <Box>
+          <Button variant='unstyled'><FontAwesome5 name='video' size={24} color='#efefef' /></Button>
+          <Text color='white' textAlign='center'>Stop Video</Text>
+        </Box>
+        <Box>
+          <Button variant='unstyled'><FontAwesome name='slideshare' size={24} color='#efefef' /></Button>
+          <Text color='white' textAlign='center'>Share Screen</Text>
+        </Box>
+        <Box>
+          <Button variant='unstyled'><FontAwesome name='group' size={24} color='#efefef' /></Button>
+          <Text color='white' textAlign='center'>Participants</Text>
+        </Box>
+      </HStack>
+    </Flex>
+  ) :
+    (
       <StartMeeting name={name} roomId={roomId} setName={setName} setRoomId={setRoomId} joinRoom={joinRoom} />
-  )
+    )
+
 }
 
 export default MeetingRoom
